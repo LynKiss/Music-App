@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express } from "express";
 import dotenv from "dotenv"
 import * as database from "./config/database"
 import clientRoutes from "./routes/client/index.route";
@@ -16,12 +16,6 @@ app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 app.use(express.static(`${__dirname}/public`));
-
-app.get("/topics", (req: Request, res: Response) => {
-  res.render("client/pages/topics/index")
-});
-
-
 
 clientRoutes(app);
 

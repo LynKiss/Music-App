@@ -1,0 +1,28 @@
+﻿extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.song-page.py-4
+    .row.mb-4
+      .col-12
+        +box-head(pageTitle)
+
+    .row
+      each song in songs
+        .col-12.col-lg-6.mb-4
+          .song-item
+            .inner-image
+              a(href=`/songs/detail/${song.slug}`)
+                img(src=song.avatar, alt=song.title)
+            .inner-content
+              .inner-title
+                a(href=`/songs/detail/${song.slug}`) #{song.title}
+              .inner-singer
+                i(class="fa-solid fa-microphone-lines")
+                |  #{song.infoSinger ? song.infoSinger.fullName : "Đang cập nhật"}
+              .inner-like
+                i(class="fa-solid fa-thumbs-up")
+                |  #{song.like}
+              .inner-time
+                i(class="fa-regular fa-clock")
+                |  Hôm nay
