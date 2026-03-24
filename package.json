@@ -16,10 +16,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect index.ts"
+    "start": "nodemon index.ts",
+    "start:debug": "nodemon --exec \"node --inspect ./node_modules/ts-node/dist/bin.js\" index.ts"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.3.2",
+    "pug": "^3.0.4"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
