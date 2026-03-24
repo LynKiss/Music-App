@@ -185,12 +185,113 @@
   margin-bottom: 8px;
 }
 
+.song-item .inner-heart {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-bottom: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #ffe4e6;
+  color: #be123c;
+  font-size: 15px;
+  font-weight: 600;
+}
+
 .song-item .inner-singer i,
 .song-item .inner-like i,
 .song-item .inner-time i {
   width: 18px;
   margin-right: 8px;
   color: #2563eb;
+}
+
+.song-item .inner-heart i {
+  color: #e11d48;
+}
+
+.favorite-song-page .row:last-child {
+  align-items: stretch;
+}
+
+.favorite-song-page {
+  padding-top: 8px;
+  padding-bottom: 24px;
+}
+
+.favorite-song-page .song-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 100%;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.favorite-song-page .song-item .inner-image {
+  width: 180px;
+  flex: 0 0 180px;
+}
+
+.favorite-song-page .song-item .inner-image a {
+  display: block;
+}
+
+.favorite-song-page .song-item .inner-image img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.16);
+}
+
+.favorite-song-page .song-item .inner-content {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.favorite-song-page .song-item .inner-title a {
+  font-size: 24px;
+  line-height: 1.35;
+}
+
+.favorite-song-page .song-item .inner-singer,
+.favorite-song-page .song-item .inner-time {
+  font-size: 15px;
+}
+
+.favorite-song-page .song-item .inner-heart {
+  margin-top: 4px;
+}
+
+.favorite-song-page .song-item .inner-time {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767.98px) {
+  .favorite-song-page .song-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .favorite-song-page .song-item .inner-image {
+    width: 100%;
+    flex-basis: auto;
+  }
+
+  .favorite-song-page .song-item .inner-image img {
+    height: 220px;
+  }
+
+  .favorite-song-page .song-item .inner-title a {
+    font-size: 22px;
+  }
 }
 
 .footer {

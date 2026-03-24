@@ -1,0 +1,16 @@
+<svg width="640" height="640" viewBox="0 0 640 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="640" rx="40" fill="#0F172A"/>
+  <rect x="38" y="38" width="564" height="564" rx="28" fill="url(#bg1)"/>
+  <circle cx="493" cy="146" r="72" fill="#FCA5A5" fill-opacity="0.28"/>
+  <circle cx="141" cy="506" r="92" fill="#F9A8D4" fill-opacity="0.22"/>
+  <rect x="104" y="102" width="432" height="432" rx="28" fill="#111827" fill-opacity="0.4" stroke="#FBCFE8" stroke-opacity="0.4" stroke-width="2"/>
+  <path d="M174 424L248 256L302 358L370 210L466 424" stroke="#FDE68A" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="370" cy="210" r="20" fill="#FFF7ED"/>
+  <text x="104" y="580" fill="#FFF7ED" font-size="44" font-family="Segoe UI, Arial, sans-serif" font-weight="700">CUT DOI NOI SAU</text>
+  <defs>
+    <linearGradient id="bg1" x1="78" y1="80" x2="574" y2="590" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C3AED"/>
+      <stop offset="1" stop-color="#EC4899"/>
+    </linearGradient>
+  </defs>
+</svg>

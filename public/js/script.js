@@ -89,30 +89,57 @@ if (buttonLike) {
 
 
 // Button Favorite
-const buttonFavorite = document.querySelector("[button-favorite]");
-if (buttonFavorite) {
-  buttonFavorite.addEventListener("click", () => {
-    const idSong = buttonFavorite.getAttribute("button-favorite");
-    const isActive = buttonFavorite.classList.contains("active");
+const ListButtonFavorite = document.querySelectorAll("[button-favorite]");
+if (ListButtonFavorite.length > 0) {
+  ListButtonFavorite.forEach((buttonFavorite) => {
+    const icon = buttonFavorite.querySelector("i");
 
-    const typeFavorite = isActive ? "unfavorite" : "favorite";
-    const link = `/songs/favorite/${typeFavorite}/${idSong}`;
-    const option = {
-      method: "PATCH",
-    };
+    if (icon) {
+      icon.classList.toggle("fa-solid", buttonFavorite.classList.contains("active"));
+      icon.classList.toggle("fa-regular", !buttonFavorite.classList.contains("active"));
+    }
 
-    fetch(link, option)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.code !== 200) {
-          return;
-        }
+    buttonFavorite.addEventListener("click", () => {
+      const idSong = buttonFavorite.getAttribute("button-favorite");
+      const isActive = buttonFavorite.classList.contains("active");
 
-        buttonFavorite.classList.toggle("active");
-      })
-      .catch((error) => {
-        console.error("Favorite failed:", error);
-      });
+      const typeFavorite = isActive ? "unfavorite" : "favorite";
+      const link = `/songs/favorite/${typeFavorite}/${idSong}`;
+      const option = {
+        method: "PATCH",
+      };
+
+      fetch(link, option)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.code !== 200) {
+            return;
+          }
+
+          buttonFavorite.classList.toggle("active", typeFavorite === "favorite");
+
+          if (icon) {
+            const isFavorite = typeFavorite === "favorite";
+            icon.classList.toggle("fa-solid", isFavorite);
+            icon.classList.toggle("fa-regular", !isFavorite);
+          }
+
+          if (typeFavorite === "unfavorite") {
+            const songItem = buttonFavorite.closest(".song-item");
+            if (songItem && !document.querySelector(".singer-detail")) {
+              const col = songItem.closest(".col-6, .col-12");
+              if (col) {
+                col.remove();
+              } else {
+                songItem.remove();
+              }
+            }
+          }
+        })
+        .catch((error) => {
+          console.error("Favorite failed:", error);
+        });
+    });
   });
 }
 // End Button Favorite

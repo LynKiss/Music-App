@@ -1,0 +1,16 @@
+<svg width="640" height="640" viewBox="0 0 640 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="640" rx="40" fill="#082F49"/>
+  <rect x="38" y="38" width="564" height="564" rx="28" fill="url(#bg2)"/>
+  <circle cx="152" cy="142" r="88" fill="#BAE6FD" fill-opacity="0.28"/>
+  <circle cx="498" cy="488" r="106" fill="#86EFAC" fill-opacity="0.22"/>
+  <rect x="98" y="116" width="444" height="408" rx="30" fill="#0F172A" fill-opacity="0.26" stroke="#E0F2FE" stroke-opacity="0.45" stroke-width="2"/>
+  <path d="M152 394C215 314 286 276 347 276C392 276 430 298 474 342" stroke="#F0FDF4" stroke-width="24" stroke-linecap="round"/>
+  <path d="M219 245C257 282 306 307 357 307C405 307 451 286 492 252" stroke="#FDE68A" stroke-width="18" stroke-linecap="round"/>
+  <text x="100" y="580" fill="#F8FAFC" font-size="37" font-family="Segoe UI, Arial, sans-serif" font-weight="700">NGAY MAI NGUOI TA LAY CHONG</text>
+  <defs>
+    <linearGradient id="bg2" x1="63" y1="72" x2="586" y2="571" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0EA5E9"/>
+      <stop offset="1" stop-color="#14B8A6"/>
+    </linearGradient>
+  </defs>
+</svg>
