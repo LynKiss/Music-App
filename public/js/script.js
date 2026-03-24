@@ -123,18 +123,6 @@ if (ListButtonFavorite.length > 0) {
             icon.classList.toggle("fa-solid", isFavorite);
             icon.classList.toggle("fa-regular", !isFavorite);
           }
-
-          if (typeFavorite === "unfavorite") {
-            const songItem = buttonFavorite.closest(".song-item");
-            if (songItem && !document.querySelector(".singer-detail")) {
-              const col = songItem.closest(".col-6, .col-12");
-              if (col) {
-                col.remove();
-              } else {
-                songItem.remove();
-              }
-            }
-          }
         })
         .catch((error) => {
           console.error("Favorite failed:", error);
