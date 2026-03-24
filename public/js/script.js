@@ -1,6 +1,7 @@
 // APlayer
 const aplayer = document.querySelector("#aplayer");
 const disc = document.querySelector(".singer-detail .inner-avatar");
+const listenElement = document.querySelector(".singer-detail .inner-listen span");
 
 if (aplayer && typeof APlayer !== "undefined") {
   const songRaw = aplayer.getAttribute("data-song");
@@ -38,6 +39,25 @@ if (aplayer && typeof APlayer !== "undefined") {
       if (disc) {
         disc.classList.remove("is-playing");
       }
+
+      const link = `/songs/listen/${dataSong._id}`;
+
+      fetch(link, {
+        method: "PATCH",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.code !== 200) {
+            return;
+          }
+
+          if (listenElement) {
+            listenElement.innerHTML = `${data.listen} Luot nghe`;
+          }
+        })
+        .catch((error) => {
+          console.error("Listen failed:", error);
+        });
     });
   }
 }

@@ -124,6 +124,42 @@ export const like = async (req: Request, res: Response) => {
     like: currentLike,
   });
 };
+
+// [PATCH] /songs/listen/:idSong
+export const listen = async (req: Request, res: Response) => {
+  const idSong: string = req.params.idSong as string;
+
+  const song = await Song.findOne({
+    _id: idSong,
+    status: "active",
+    deleted: false,
+  });
+
+  if (!song) {
+    return res.status(404).json({
+      code: 404,
+      message: "Bài hát không tồn tại",
+    });
+  }
+
+  const listenValue = song.listen || 0;
+  const currentListen = listenValue + 1;
+
+  await Song.updateOne(
+    {
+      _id: idSong,
+    },
+    {
+      listen: currentListen,
+    }
+  );
+
+  res.json({
+    code: 200,
+    message: "Thành công",
+    listen: currentListen,
+  });
+};
 // [PATCH] /songs/favorite/:typeFavorite/:idSong
 export const favorite = async (req: Request, res: Response) => {
   const idSong: string = req.params.idSong as string;

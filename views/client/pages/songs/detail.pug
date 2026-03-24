@@ -18,6 +18,9 @@ block main
             div(class="inner-action inner-topic")
               i(class="fa-solid fa-music")
               |  #{topic.title}
+            div(class="inner-action inner-listen")
+              i(class="fa-solid fa-headphones")
+              span #{song.listen} Lượt nghe
             div(class="inner-action inner-like" button-like=song.id)
               i(class="fa-regular fa-thumbs-up")
               span #{song.like} Thích
