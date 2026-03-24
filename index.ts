@@ -15,6 +15,8 @@ database.connect(); // kết nối database
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
+app.use(express.static(`${__dirname}/public`));
+
 app.get("/topics", (req: Request, res: Response) => {
   res.render("client/pages/topics/index")
 });
