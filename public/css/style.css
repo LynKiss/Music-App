@@ -295,6 +295,31 @@
   color: #2563eb;
 }
 
+.singer-detail .inner-like {
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.singer-detail .inner-like:hover {
+  transform: translateY(-1px);
+  background: #bfdbfe;
+  color: #1d4ed8;
+  box-shadow: 0 10px 18px rgba(37, 99, 235, 0.16);
+}
+
+.singer-detail .inner-like:hover i {
+  color: #1d4ed8;
+}
+
+.singer-detail .inner-like.active {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.singer-detail .inner-like.active i {
+  color: #1d4ed8;
+}
+
 .singer-detail .inner-play {
   display: flex;
   align-items: center;
@@ -435,6 +460,7 @@
     justify-content: center;
   }
 }
+
 
 
 

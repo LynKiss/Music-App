@@ -74,3 +74,39 @@ export const detail = async (req: Request, res: Response) => {
     topic: topic,
   });
 };
+// [PATCH] /songs/:typeLike/yes/:idSong
+export const like = async (req: Request, res: Response) => {
+  const idSong: string = req.params.idSong as string;
+  const typeLike: string = req.params.typeLike as string;
+
+  const song = await Song.findOne({
+    _id: idSong,
+    status: "active",
+    deleted: false,
+  });
+
+  if (!song) {
+    return res.status(404).json({
+      code: 404,
+      message: "Bài hát không tồn tại",
+    });
+  }
+
+  const likeValue = song.like || 0;
+  const currentLike:number = typeLike === "like" ? likeValue + 1 : Math.max(likeValue - 1, 0);
+
+  await Song.updateOne(
+    {
+      _id: idSong,
+    },
+    {
+      like: currentLike,
+    }
+  );
+
+  res.json({
+    code: 200,
+    message: "Thành công",
+    like: currentLike,
+  });
+};
