@@ -15,9 +15,10 @@
                 type="text"
                 placeholder="Nhap tu khoa..."
                 name="keyword"
-                value=keyword || ""
+                value=typeof keyword !== "undefined" ? keyword : ""
               )
               button.btn.btn-primary(type="submit") Tim
+          .inner-suggest
 
       .col-12.col-lg-4
         .inner-menu

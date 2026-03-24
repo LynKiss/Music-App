@@ -1,4 +1,4 @@
-﻿// APlayer
+// APlayer
 const aplayer = document.querySelector("#aplayer");
 const disc = document.querySelector(".singer-detail .inner-avatar");
 
@@ -15,7 +15,7 @@ if (aplayer && typeof APlayer !== "undefined") {
       audio: [
         {
           name: dataSong.title,
-          artist: dataSinger ? dataSinger.fullName : "Đang cập nhật",
+          artist: dataSinger ? dataSinger.fullName : "Dang cap nhat",
           url: dataSong.audio,
           cover: dataSong.avatar,
         },
@@ -69,7 +69,7 @@ if (buttonLike) {
         }
 
         if (span) {
-          span.innerHTML = `${data.like} Thích`;
+          span.innerHTML = `${data.like} Thich`;
         }
 
         buttonLike.classList.toggle("active", typeLike === "like");
@@ -86,7 +86,6 @@ if (buttonLike) {
   });
 }
 // End Button Like
-
 
 // Button Favorite
 const ListButtonFavorite = document.querySelectorAll("[button-favorite]");
@@ -105,11 +104,10 @@ if (ListButtonFavorite.length > 0) {
 
       const typeFavorite = isActive ? "unfavorite" : "favorite";
       const link = `/songs/favorite/${typeFavorite}/${idSong}`;
-      const option = {
-        method: "PATCH",
-      };
 
-      fetch(link, option)
+      fetch(link, {
+        method: "PATCH",
+      })
         .then((res) => res.json())
         .then((data) => {
           if (data.code !== 200) {
@@ -131,3 +129,58 @@ if (ListButtonFavorite.length > 0) {
   });
 }
 // End Button Favorite
+
+// Search Suggest
+const boxSearch = document.querySelector(".box-search");
+if (boxSearch) {
+  const input = boxSearch.querySelector("input[name='keyword']");
+  const boxSuggest = boxSearch.querySelector(".inner-suggest");
+
+  if (input && boxSuggest) {
+    input.addEventListener("keyup", () => {
+      const keyword = input.value.trim();
+
+      if (!keyword) {
+        boxSuggest.innerHTML = "";
+        boxSuggest.classList.remove("show");
+        return;
+      }
+
+      const link = `/search/suggest?keyword=${encodeURIComponent(keyword)}`;
+
+      fetch(link)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.code !== 200 || !Array.isArray(data.songs) || data.songs.length === 0) {
+            boxSuggest.innerHTML = "";
+            boxSuggest.classList.remove("show");
+            return;
+          }
+
+          const htmls = data.songs.map((song) => `
+            <a class="inner-item" href="/songs/detail/${song.slug}">
+              <div class="inner-image">
+                <img src="${song.avatar}" alt="${song.title}">
+              </div>
+              <div class="inner-info">
+                <div class="inner-title">${song.title}</div>
+                <div class="inner-singer">
+                  <i class="fa-solid fa-microphone-lines"></i>
+                  ${song.infoSinger.fullName}
+                </div>
+              </div>
+            </a>
+          `);
+
+          boxSuggest.innerHTML = htmls.join("");
+          boxSuggest.classList.add("show");
+        })
+        .catch((error) => {
+          boxSuggest.innerHTML = "";
+          boxSuggest.classList.remove("show");
+          console.error("Suggest failed:", error);
+        });
+    });
+  }
+}
+// End Search Suggest
