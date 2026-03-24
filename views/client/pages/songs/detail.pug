@@ -1,0 +1,46 @@
+﻿extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .singer-detail
+    .container.my-3
+      .row
+        .col-12
+          .inner-title #{song.title}
+
+          .inner-actions
+            div(class="inner-action inner-time")
+              i(class="fa-regular fa-clock")
+              |  20/10/2023
+            div(class="inner-action inner-singer")
+              i(class="fa-solid fa-microphone-lines")
+              |  #{singer.fullName}
+            div(class="inner-action inner-topic")
+              i(class="fa-solid fa-music")
+              |  #{topic.title}
+            div(class="inner-action inner-like")
+              i(class="fa-regular fa-thumbs-up")
+              |  #{song.like} Thích
+            div(class="inner-action inner-heart")
+              i(class="fa-regular fa-heart")
+              |  Bài hát yêu thích
+
+          .inner-play
+            .inner-avatar
+              img(src=song.avatar)
+            .inner-audio
+              div(
+                id="aplayer"
+                data-song=JSON.stringify(song)
+                data-singer=JSON.stringify(singer)
+              )
+
+          .inner-desc
+            .inner-label Mô tả
+            .inner-text
+              |  #{song.description}
+
+          .inner-desc
+            .inner-label Lời bài hát
+            .inner-text
+              |  #{song.lyrics}
