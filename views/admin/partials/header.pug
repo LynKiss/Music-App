@@ -1,0 +1,13 @@
+header.header
+  .container-fluid
+    .row.align-items-center
+      .col-lg-4.col-md-5.col-12
+        .inner-logo
+          a(href=`${prefixAdmin}/dashboard`) Music Admin
+
+      .col-lg-8.col-md-7.col-12
+        - const currentUserName = user && user.fullName ? user.fullName : "Admin";
+        .admin-header-actions
+          a.admin-header-link(href=`${prefixAdmin}/dashboard`) Tong quan
+          a.admin-user-btn(href=`${prefixAdmin}/my-account`) #{currentUserName}
+          a.admin-logout-btn(href=`${prefixAdmin}/auth/logout`) Dang xuat

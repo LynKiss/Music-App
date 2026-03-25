@@ -13,14 +13,18 @@ if (aplayer && typeof APlayer !== "undefined") {
 
     const ap = new APlayer({
       container: aplayer,
+      lrcType: 1,
       audio: [
         {
           name: dataSong.title,
           artist: dataSinger ? dataSinger.fullName : "Dang cap nhat",
           url: dataSong.audio,
           cover: dataSong.avatar,
+          lrc: dataSong.lyrics || "",
         },
       ],
+      autoplay: true,
+      volume: 0.8,
     });
 
     ap.on("play", () => {

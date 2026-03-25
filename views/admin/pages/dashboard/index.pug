@@ -1,0 +1,32 @@
+extends ../../layouts/default.pug
+
+block main
+  .dashboard-page
+    .dashboard-hero
+      .dashboard-hero__content
+        p.dashboard-eyebrow Bang dieu khien
+        h1.dashboard-title Trang tong quan
+        p.dashboard-desc Theo doi nhanh tinh hinh quan tri, truy cap cac khu vuc quan trong va bat dau cong viec trong mot giao dien gon gang hon.
+      .dashboard-hero__badge He thong admin
+
+    .dashboard-grid
+      .dashboard-card
+        span.dashboard-card__label Danh muc
+        strong.dashboard-card__value Quan ly danh muc
+        p.dashboard-card__text To chuc cac nhom noi dung va sap xep luong hien thi hop ly.
+      .dashboard-card
+        span.dashboard-card__label San pham
+        strong.dashboard-card__value Quan ly bai hat
+        p.dashboard-card__text Cap nhat thong tin, trang thai va noi dung cho tung muc nhac.
+      .dashboard-card
+        span.dashboard-card__label Phan quyen
+        strong.dashboard-card__value Tai khoan quan tri
+        p.dashboard-card__text Theo doi vai tro va phan quyen de giu khu vuc admin on dinh.
+
+    .dashboard-panel
+      h2.dashboard-panel__title Loi tat thao tac
+      .dashboard-shortcuts
+        a.dashboard-shortcut(href=`${prefixAdmin}/products`) Danh sach san pham
+        a.dashboard-shortcut(href=`${prefixAdmin}/products-category`) Danh muc san pham
+        a.dashboard-shortcut(href=`${prefixAdmin}/roles`) Nhom quyen
+        a.dashboard-shortcut(href=`${prefixAdmin}/setting/general`) Cai dat chung

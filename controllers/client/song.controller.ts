@@ -1,8 +1,8 @@
 ﻿import { Request, Response } from "express";
-import Topic from "../models/topic.model";
-import Song from "../models/song.model";
-import Singer from "../models/singer.model";
-import FavoriteSong from "../models/favorite-song.model";
+import Topic from "../../models/topic.model";
+import Song from "../../models/song.model";
+import Singer from "../../models/singer.model";
+import FavoriteSong from "../../models/favorite-song.model";
 
 // [GET] /songs/:slugTopic
 export const list = async (req: Request, res: Response) => {
