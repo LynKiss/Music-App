@@ -1,0 +1,48 @@
+extends ../../layouts/default.pug
+
+block main
+  h1(class="mb-4") #{pageTitle}
+
+  .card.mb-3
+    .card-header Danh sach
+    .card-body
+      .row
+        .col-8
+        .col-4.text-right
+          a(
+            href=`${prefixAdmin}/topics/create`
+            class="btn btn-outline-success"
+          ) + Them moi
+  
+  .card
+    .card-body
+      if topics && topics.length > 0
+        .table-responsive
+          table.table.table-hover
+            thead
+              tr
+                th STT
+                th Anh
+                th Chu de
+                th Trang thai
+                th Slug
+                th Hanh dong
+            tbody
+              each item, index in topics
+                tr
+                  td #{index + 1}
+                  td
+                    if item.avatar
+                      img(src=item.avatar, alt=item.title, style="width:72px;height:72px;object-fit:cover;border-radius:12px;")
+                    else
+                      span.text-muted Chua co anh
+                  td #{item.title}
+                  td
+                    span(class=`badge ${item.status === "active" ? "badge-success" : "badge-secondary"}`) #{item.status}
+                  td #{item.slug}
+                  td
+                    a.btn.btn-sm.btn-warning.mr-2(href=`${prefixAdmin}/topics/edit/${item._id}`) Sua
+                    form(action=`${prefixAdmin}/topics/delete/${item._id}` method="POST" style="display:inline-block;")
+                      button.btn.btn-sm.btn-danger(type="submit" onclick="return confirm('Ban co chac muon xoa chu de nay?')") Xoa
+      else
+        p.mb-0.text-muted Chua co chu de nao.

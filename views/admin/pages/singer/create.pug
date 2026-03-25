@@ -1,0 +1,31 @@
+extends ../../layouts/default.pug
+
+block main
+  h1.mb-4 #{pageTitle}
+  .card
+    .card-body
+      form(action=`${prefixAdmin}/singers/create` method="POST")
+        .form-group
+          label(for="fullName") Ten ca si
+          input.form-control(type="text" id="fullName" name="fullName" required)
+
+        .form-group
+          label(for="avatar") Link anh
+          input.form-control(type="text" id="avatar" name="avatar" placeholder="https://...")
+
+        .form-group
+          label(for="description") Mo ta
+          textarea.form-control(id="description" name="description" rows="5")
+
+        .form-group
+          label Trang thai
+          .form-check
+            input.form-check-input(type="radio" id="singer-status-active" name="status" value="active" checked)
+            label.form-check-label(for="singer-status-active") Hoat dong
+          .form-check
+            input.form-check-input(type="radio" id="singer-status-inactive" name="status" value="inactive")
+            label.form-check-label(for="singer-status-inactive") Dung hoat dong
+
+        .mt-3
+          button.btn.btn-primary(type="submit") Tao moi
+          a.btn.btn-secondary.ml-2(href=`${prefixAdmin}/singers`) Quay lai

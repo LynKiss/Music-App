@@ -1,0 +1,61 @@
+extends ../../layouts/default.pug
+
+block main
+  h1.mb-4 #{pageTitle}
+  .card
+    .card-body
+      form(action=`${prefixAdmin}/songs/create` method="POST")
+        .form-group
+          label(for="title") Ten bai hat
+          input.form-control(type="text" id="title" name="title" required)
+
+        .form-row
+          .form-group.col-md-6
+            label(for="topicId") Chu de
+            select.form-control(id="topicId" name="topicId" required)
+              option(value="") -- Chon chu de --
+              each item in topics
+                option(value=item._id) #{item.title}
+          .form-group.col-md-6
+            label(for="singerId") Ca si
+            select.form-control(id="singerId" name="singerId" required)
+              option(value="") -- Chon ca si --
+              each item in singers
+                option(value=item._id) #{item.fullName}
+
+        .form-group
+          label(for="avatar") Link anh
+          input.form-control(type="text" id="avatar" name="avatar" placeholder="https://...")
+
+        .form-group
+          label(for="audio") Link audio
+          input.form-control(type="text" id="audio" name="audio" placeholder="https://...")
+
+        .form-row
+          .form-group.col-md-6
+            label(for="listen") Luot nghe
+            input.form-control(type="number" min="0" id="listen" name="listen" value="0")
+          .form-group.col-md-6
+            label(for="like") Luot thich
+            input.form-control(type="number" min="0" id="like" name="like" value="0")
+
+        .form-group
+          label(for="description") Mo ta
+          textarea.form-control(id="description" name="description" rows="4")
+
+        .form-group
+          label(for="lyrics") Loi bai hat
+          textarea.form-control(id="lyrics" name="lyrics" rows="8")
+
+        .form-group
+          label Trang thai
+          .form-check
+            input.form-check-input(type="radio" id="song-status-active" name="status" value="active" checked)
+            label.form-check-label(for="song-status-active") Hoat dong
+          .form-check
+            input.form-check-input(type="radio" id="song-status-inactive" name="status" value="inactive")
+            label.form-check-label(for="song-status-inactive") Dung hoat dong
+
+        .mt-3
+          button.btn.btn-primary(type="submit") Tao moi
+          a.btn.btn-secondary.ml-2(href=`${prefixAdmin}/songs`) Quay lai

@@ -1,0 +1,50 @@
+extends ../../layouts/default.pug
+
+block main
+  h1.mb-4 #{pageTitle}
+
+  .card.mb-3
+    .card-header Danh sach
+    .card-body.text-right
+      a.btn.btn-outline-success(href=`${prefixAdmin}/songs/create`) + Them moi
+
+  .card
+    .card-body
+      if songs && songs.length > 0
+        .table-responsive
+          table.table.table-hover
+            thead
+              tr
+                th STT
+                th Anh
+                th Bai hat
+                th Ca si
+                th Chu de
+                th Luot nghe
+                th Luot thich
+                th Trang thai
+                th Hanh dong
+            tbody
+              each item, index in songs
+                tr
+                  td #{index + 1}
+                  td
+                    if item.avatar
+                      img(src=item.avatar, alt=item.title, style="width:72px;height:72px;object-fit:cover;border-radius:12px;")
+                    else
+                      span.text-muted Chua co anh
+                  td
+                    strong.d-block #{item.title}
+                    small.text-muted #{item.slug}
+                  td #{item.singerName}
+                  td #{item.topicName}
+                  td #{item.listen || 0}
+                  td #{item.like || 0}
+                  td
+                    span(class=`badge ${item.status === "active" ? "badge-success" : "badge-secondary"}`) #{item.status}
+                  td
+                    a.btn.btn-sm.btn-warning.mr-2(href=`${prefixAdmin}/songs/edit/${item._id}`) Sua
+                    form(action=`${prefixAdmin}/songs/delete/${item._id}` method="POST" style="display:inline-block;")
+                      button.btn.btn-sm.btn-danger(type="submit" onclick="return confirm('Ban co chac muon xoa bai hat nay?')") Xoa
+      else
+        p.mb-0.text-muted Chua co bai hat nao.
