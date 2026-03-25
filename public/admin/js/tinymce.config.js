@@ -4,7 +4,9 @@
 // });
 
 tinymce.init({
-  selector: "textarea",
+  // Chỉ áp TinyMCE cho các textarea có class "editor".
+  // Như vậy trường lyrics vẫn là text thuần để nhập định dạng LRC chạy theo nhạc.
+  selector: "textarea.editor",
 
   // Plugins cần thiết
   plugins: "image code table link",
@@ -14,13 +16,8 @@ tinymce.init({
   toolbar:
     "undo redo | bold italic | alignleft aligncenter alignright | image | code",
 
-  // Cho phép upload ảnh từ data URLs
   automatic_uploads: true,
-
-  // Chỉ mở picker cho ảnh
   file_picker_types: "image",
-
-  // Cấu hình resize ảnh
   image_resize: true,
   image_advtab: true,
   image_class_list: [
@@ -28,37 +25,28 @@ tinymce.init({
     { title: "Responsive", value: "img-fluid" },
   ],
 
-  // Hàm xử lý khi chọn file ảnh
-  file_picker_callback: function (cb, value, meta) {
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
+  // Route /admin/upload sẽ nhận file, upload lên Cloudinary
+  // rồi trả lại { location: "https://..." } cho TinyMCE.
+  images_upload_handler: async (blobInfo) => {
+    // blobInfo là file ảnh người dùng vừa chèn trong editor.
+    // Mình tạo FormData để gửi file này sang backend giống một form upload thông thường.
+    const formData = new FormData();
+    formData.append("file", blobInfo.blob(), blobInfo.filename());
 
-    input.onchange = function () {
-      const file = this.files[0];
+    const response = await fetch("/admin/upload", {
+      method: "POST",
+      body: formData,
+    });
 
-      const reader = new FileReader();
-      reader.onload = function () {
-        // Tạo blob id duy nhất
-        const id = "blobid" + new Date().getTime();
-        const blobCache = tinymce.activeEditor.editorUpload.blobCache;
-        const base64 = reader.result.split(",")[1];
-        const blobInfo = blobCache.create(id, file, base64);
+    if (!response.ok) {
+      throw new Error("Upload image failed");
+    }
 
-        // Thêm blob vào cache
-        blobCache.add(blobInfo);
-
-        // Gọi callback của TinyMCE để chèn ảnh
-        cb(blobInfo.blobUri(), { title: file.name });
-      };
-
-      reader.readAsDataURL(file);
-    };
-
-    input.click();
+    // Backend trả về { location: urlCloudinary }.
+    // TinyMCE sẽ tự lấy URL này để chèn <img src="..."> vào nội dung.
+    const result = await response.json();
+    return result.location;
   },
-
-  // Tùy chọn style nội dung
   content_style:
     "body { font-family:Helvetica,Arial,sans-serif; font-size:14px } img { max-width: 100%; height: auto; }",
 });

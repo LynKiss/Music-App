@@ -3,6 +3,7 @@ import Topic from "../../models/topic.model";
 import Song from "../../models/song.model";
 import Singer from "../../models/singer.model";
 import FavoriteSong from "../../models/favorite-song.model";
+import { normalizeLyrics } from "../../helpers/normalizeLyrics";
 
 // [GET] /songs/:slugTopic
 export const list = async (req: Request, res: Response) => {
@@ -78,6 +79,7 @@ export const detail = async (req: Request, res: Response) => {
   const songDetail = {
     ...song,
     id: songId,
+    lyrics: normalizeLyrics(song.lyrics || ""),
     isFavoriteSong: !!songFavorite,
   };
 

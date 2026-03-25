@@ -70,11 +70,12 @@ block main
 
         .form-group
           label(for="description") Mo ta
-          textarea.form-control(id="description" name="description" rows="4") #{song.description}
+          textarea.form-control.editor(id="description" name="description" rows="4") #{song.description}
 
         .form-group
           label(for="lyrics") Loi bai hat
           textarea.form-control(id="lyrics" name="lyrics" rows="8") #{song.lyrics}
+          small.form-text.text-muted Nhap loi theo dinh dang LRC de APlayer dong bo loi voi nhac.
 
         .form-group
           label Trang thai

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { systemConfig } from "../../config/system";
 import { convertToSlug } from "../../helpers/convertSlug";
+import { normalizeLyrics } from "../../helpers/normalizeLyrics";
 import Singer from "../../models/singer.model";
 import Song from "../../models/song.model";
 import Topic from "../../models/topic.model";
@@ -69,18 +70,20 @@ export const create = async (req: Request, res: Response) => {
 // [POST] /admin/songs/create
 export const createPost = async (req: Request, res: Response) => {
   const title = (req.body.title || "").trim();
+  const avatar = Array.isArray(req.body.avatar) ? req.body.avatar[0] : req.body.avatar;
+  const audio = Array.isArray(req.body.audio) ? req.body.audio[0] : req.body.audio;
 
   // Ở thời điểm này req.body.avatar và req.body.audio
   // không còn là file nữa mà đã là URL Cloudinary do middleware gắn vào.
   const record = new Song({
     title,
-    avatar: (req.body.avatar || "").trim(),
+    avatar: (avatar || "").trim(),
     description: (req.body.description || "").trim(),
     singerId: req.body.singerId || "",
     topicId: req.body.topicId || "",
     like: Number(req.body.like || 0),
     lyrics: (req.body.lyrics || "").trim(),
-    audio: (req.body.audio || "").trim(),
+    audio: (audio || "").trim(),
     status: req.body.status || "active",
     slug: convertToSlug(title),
     listen: Number(req.body.listen || 0),
@@ -115,7 +118,10 @@ export const edit = async (req: Request, res: Response) => {
 
   res.render("admin/pages/song/edit.pug", {
     pageTitle: "Chinh sua bai hat",
-    song,
+    song: {
+      ...song,
+      lyrics: normalizeLyrics(song.lyrics || ""),
+    },
     topics,
     singers,
   });
@@ -124,6 +130,8 @@ export const edit = async (req: Request, res: Response) => {
 // [POST] /admin/songs/edit/:id
 export const editPost = async (req: Request, res: Response) => {
   const title = (req.body.title || "").trim();
+  const avatar = Array.isArray(req.body.avatar) ? req.body.avatar[0] : req.body.avatar;
+  const audio = Array.isArray(req.body.audio) ? req.body.audio[0] : req.body.audio;
 
   await Song.updateOne(
     {
@@ -133,14 +141,14 @@ export const editPost = async (req: Request, res: Response) => {
     {
       title,
       // Chỉ cập nhật avatar khi người dùng upload file mới.
-      ...(req.body.avatar ? { avatar: (req.body.avatar || "").trim() } : {}),
+      ...(avatar ? { avatar: (avatar || "").trim() } : {}),
       description: (req.body.description || "").trim(),
       singerId: req.body.singerId || "",
       topicId: req.body.topicId || "",
       like: Number(req.body.like || 0),
       lyrics: (req.body.lyrics || "").trim(),
       // Audio cũng tương tự: không có file mới thì giữ link cũ.
-      ...(req.body.audio ? { audio: (req.body.audio || "").trim() } : {}),
+      ...(audio ? { audio: (audio || "").trim() } : {}),
       status: req.body.status || "inactive",
       slug: convertToSlug(title),
       listen: Number(req.body.listen || 0),

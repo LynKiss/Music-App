@@ -41,9 +41,15 @@ block main
           .inner-desc
             .inner-label Mô tả
             .inner-text
-              |  #{song.description}
+              if song.description
+                != song.description
+              else
+                | Dang cap nhat
 
           .inner-desc
             .inner-label Lời bài hát
             .inner-text
-              |  #{song.lyrics}
+              if song.lyrics
+                = song.lyrics
+              else
+                | Dang cap nhat
