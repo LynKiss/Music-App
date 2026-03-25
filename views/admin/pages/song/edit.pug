@@ -4,7 +4,8 @@ block main
   h1.mb-4 #{pageTitle}
   .card
     .card-body
-      form(action=`${prefixAdmin}/songs/edit/${song._id}` method="POST")
+      // Khi edit vẫn cần multipart/form-data để có thể thay ảnh hoặc audio mới.
+      form(action=`${prefixAdmin}/songs/edit/${song._id}` method="POST" enctype="multipart/form-data")
         .form-group
           label(for="title") Ten bai hat
           input.form-control(type="text" id="title" name="title" required value=song.title)
@@ -24,12 +25,40 @@ block main
                 option(value=item._id selected=song.singerId === item._id.toString()) #{item.fullName}
 
         .form-group
-          label(for="avatar") Link anh
-          input.form-control(type="text" id="avatar" name="avatar" value=song.avatar)
+          // Nếu không chọn file mới, controller sẽ giữ nguyên avatar cũ trong database.
+          label(for="avatar" upload-image) Anh
+          input.form-control-file(
+            type="file"
+            id="avatar"
+            name="avatar"
+            accept="image/*"
+            upload-image-input
+          )
+          img(
+            src=song.avatar || ""
+            class="image-preview"
+            upload-image-preview
+          )
 
         .form-group
-          label(for="audio") Link audio
-          input.form-control(type="text" id="audio" name="audio" value=song.audio)
+          // Nếu không chọn audio mới, controller cũng sẽ giữ nguyên link audio cũ.
+          label(for="audio") File am thanh
+          input.form-control-file(
+            type="file"
+            id="audio"
+            name="audio"
+            accept="audio/*"
+            upload-audio-input
+          )
+          audio.audio-preview(
+            controls
+            preload="metadata"
+            src=song.audio || ""
+            class=song.audio ? "audio-preview show" : "audio-preview"
+            upload-audio-preview
+          )
+          if song.audio
+            small.form-text.text-muted Dang co file/link am thanh.
 
         .form-row
           .form-group.col-md-6

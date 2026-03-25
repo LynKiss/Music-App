@@ -70,6 +70,8 @@ export const create = async (req: Request, res: Response) => {
 export const createPost = async (req: Request, res: Response) => {
   const title = (req.body.title || "").trim();
 
+  // Ở thời điểm này req.body.avatar và req.body.audio
+  // không còn là file nữa mà đã là URL Cloudinary do middleware gắn vào.
   const record = new Song({
     title,
     avatar: (req.body.avatar || "").trim(),
@@ -130,13 +132,15 @@ export const editPost = async (req: Request, res: Response) => {
     },
     {
       title,
-      avatar: (req.body.avatar || "").trim(),
+      // Chỉ cập nhật avatar khi người dùng upload file mới.
+      ...(req.body.avatar ? { avatar: (req.body.avatar || "").trim() } : {}),
       description: (req.body.description || "").trim(),
       singerId: req.body.singerId || "",
       topicId: req.body.topicId || "",
       like: Number(req.body.like || 0),
       lyrics: (req.body.lyrics || "").trim(),
-      audio: (req.body.audio || "").trim(),
+      // Audio cũng tương tự: không có file mới thì giữ link cũ.
+      ...(req.body.audio ? { audio: (req.body.audio || "").trim() } : {}),
       status: req.body.status || "inactive",
       slug: convertToSlug(title),
       listen: Number(req.body.listen || 0),

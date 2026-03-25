@@ -208,3 +208,69 @@ if (boxSearch) {
   }
 }
 // End Search Suggest
+
+// Upload Image Preview
+const uploadImageInput = document.querySelector("[upload-image-input]");
+const uploadImagePreview = document.querySelector("[upload-image-preview]");
+
+if (uploadImageInput && uploadImagePreview) {
+  // Với trang edit, nếu ảnh cũ đã có sẵn src thì hiện preview ngay khi load trang.
+  if (
+    uploadImagePreview.getAttribute("src") &&
+    uploadImagePreview.getAttribute("src") !== ""
+  ) {
+    uploadImagePreview.classList.add("show");
+  }
+
+  uploadImageInput.addEventListener("change", (event) => {
+    const input = event.target;
+    const file = input.files && input.files[0];
+
+    if (!file) {
+      // Nếu người dùng bỏ chọn file thì xóa preview hiện tại.
+      uploadImagePreview.setAttribute("src", "");
+      uploadImagePreview.classList.remove("show");
+      return;
+    }
+
+    // URL.createObjectURL tạo ra một URL tạm từ file local
+    // để browser có thể hiển thị preview trước khi file được upload thật.
+    uploadImagePreview.setAttribute("src", URL.createObjectURL(file));
+    uploadImagePreview.classList.add("show");
+  });
+}
+// End Upload Image Preview
+
+// Upload Audio Preview
+const uploadAudioInput = document.querySelector("[upload-audio-input]");
+const uploadAudioPreview = document.querySelector("[upload-audio-preview]");
+
+if (uploadAudioInput && uploadAudioPreview) {
+  const currentSrc = uploadAudioPreview.getAttribute("src");
+
+  // Với trang edit, nếu audio cũ đã tồn tại thì hiện player ngay.
+  if (currentSrc) {
+    uploadAudioPreview.classList.add("show");
+  }
+
+  uploadAudioInput.addEventListener("change", (event) => {
+    const input = event.target;
+    const file = input.files && input.files[0];
+
+    if (!file) {
+      // Không còn file thì xóa source cũ và reset player.
+      uploadAudioPreview.removeAttribute("src");
+      uploadAudioPreview.classList.remove("show");
+      uploadAudioPreview.load();
+      return;
+    }
+
+    // Gán file local vào thẻ audio để người dùng nghe thử ngay
+    // trước khi middleware upload file đó lên Cloudinary.
+    uploadAudioPreview.setAttribute("src", URL.createObjectURL(file));
+    uploadAudioPreview.classList.add("show");
+    // load() buộc thẻ audio đọc lại source mới vừa được gán.
+    uploadAudioPreview.load();
+  });
+}
+// End Upload Audio Preview

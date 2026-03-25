@@ -4,7 +4,8 @@ block main
   h1.mb-4 #{pageTitle}
   .card
     .card-body
-      form(action=`${prefixAdmin}/songs/create` method="POST")
+      // Form upload file bắt buộc phải có multipart/form-data để browser gửi được binary file.
+      form(action=`${prefixAdmin}/songs/create` method="POST" enctype="multipart/form-data")
         .form-group
           label(for="title") Ten bai hat
           input.form-control(type="text" id="title" name="title" required)
@@ -24,12 +25,36 @@ block main
                 option(value=item._id) #{item.fullName}
 
         .form-group
-          label(for="avatar") Link anh
-          input.form-control(type="text" id="avatar" name="avatar" placeholder="https://...")
+          // Tên field "avatar" phải khớp với upload.fields([{ name: "avatar" }]) ở route.
+          label(for="avatar" upload-image) Anh
+          input.form-control-file(
+            type="file"
+            id="avatar"
+            name="avatar"
+            accept="image/*"
+            upload-image-input
+          )
+          img(
+            src=""
+            class="image-preview"
+            upload-image-preview
+          )
 
         .form-group
-          label(for="audio") Link audio
-          input.form-control(type="text" id="audio" name="audio" placeholder="https://...")
+          // Tên field "audio" cũng phải khớp với cấu hình upload.fields ở route.
+          label(for="audio") File am thanh
+          input.form-control-file(
+            type="file"
+            id="audio"
+            name="audio"
+            accept="audio/*"
+            upload-audio-input
+          )
+          audio.audio-preview(
+            controls
+            preload="metadata"
+            upload-audio-preview
+          )
 
         .form-row
           .form-group.col-md-6

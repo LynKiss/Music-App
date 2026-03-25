@@ -975,6 +975,32 @@
   }
 }
 
+.image-preview {
+  display: none;
+  width: 180px;
+  height: 180px;
+  margin-top: 12px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 1px solid #dbe2ea;
+  background: #f8fafc;
+}
+
+.image-preview.show {
+  display: block;
+}
+
+.audio-preview {
+  display: none;
+  width: 100%;
+  max-width: 320px;
+  margin-top: 12px;
+}
+
+.audio-preview.show {
+  display: block;
+}
+
 
 
 
